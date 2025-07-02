@@ -5,22 +5,18 @@ describe('Register spec', () => {
     it('Register successfully and redirects to login', () => {
       cy.visit('/register');
   
-      // 🔁 Interception de l’appel API vers /api/auth/register
       cy.intercept('POST', '/api/auth/register', {
         statusCode: 200,
-        body: {}, // ou ce que ton backend retourne réellement
+        body: {}, 
       }).as('register');
   
-      // 🧪 Saisie du formulaire
       cy.get('input[formControlName=firstName]').type('John');
       cy.get('input[formControlName=lastName]').type('Doe');
       cy.get('input[formControlName=email]').type('john@example.com');
       cy.get('input[formControlName=password]').type('test!1234');
   
-      // 📤 Soumission
       cy.get('button[type=submit]').click();
   
-      // ✅ Attente de l’appel API + vérification de la redirection
       cy.wait('@register');
       cy.url().should('include', '/login');
     });
