@@ -62,17 +62,25 @@ public class SessionService {
 
     public void noLongerParticipate(Long id, Long userId) {
         Session session = this.sessionRepository.findById(id).orElse(null);
-        if (session == null) {
+        User user = this.userRepository.findById(userId).orElse(null);
+
+        if (session == null || user == null) {
             throw new NotFoundException();
         }
 
         boolean alreadyParticipate = session.getUsers().stream().anyMatch(o -> o.getId().equals(userId));
-        if(!alreadyParticipate) {
+        if (!alreadyParticipate) {
             throw new BadRequestException();
         }
 
-        session.setUsers(session.getUsers().stream().filter(user -> !user.getId().equals(userId)).collect(Collectors.toList()));
+        session.setUsers(
+                session.getUsers()
+                        .stream()
+                        .filter(u -> !u.getId().equals(userId))
+                        .collect(Collectors.toList())
+        );
 
         this.sessionRepository.save(session);
     }
+
 }
