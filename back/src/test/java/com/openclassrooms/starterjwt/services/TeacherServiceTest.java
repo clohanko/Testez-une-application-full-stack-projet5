@@ -14,6 +14,7 @@ class TeacherServiceTest {
 
     private final TeacherRepository teacherRepository = mock(TeacherRepository.class);
     private final TeacherService teacherService = new TeacherService(teacherRepository);
+    // Faire un inject mocks avec mockito
 
     @Test
     void shouldReturnAllTeachers() {
