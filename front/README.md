@@ -70,3 +70,111 @@ Launching test:
 for following change:
 
 > npm run test:watch
+
+---
+
+# Yoga App - Frontend Angular
+
+Ce projet est le front-end d’une application de gestion de sessions de yoga. Il a été développé avec **Angular**, testé avec **Jest** (unitaires) et **Cypress** (E2E), et utilise **nyc** pour la couverture de code.
+
+---
+
+## Lancer l’application
+
+### En mode développement
+```bash
+npm install
+npx ng serve
+```
+Accès : `http://localhost:4200`  
+Connexion à l'API backend : proxifiée via `src/proxy.config.json`.
+
+---
+
+## Tests unitaires avec Jest
+
+### Lancer les tests unitaires
+```bash
+npx ng test
+```
+
+### Générer un rapport de couverture (Jest uniquement)
+```bash
+npx ng test --codeCoverage
+```
+
+Le rapport sera généré dans :
+```
+coverage/index.html
+```
+
+>  Les tests unitaires sont dans `src/app/**/*.spec.ts`
+
+---
+
+## Tests end-to-end avec Cypress
+
+###  Ouvrir Cypress (UI)
+```bash
+npx ng run yoga:cypress-open
+```
+
+### Lancer Cypress en mode headless
+```bash
+npx ng run yoga:cypress-run
+```
+
+---
+
+##  Générer une **couverture de tests E2E avec Cypress**
+
+### 1. Servir Angular instrumenté
+```bash
+npx ng serve --configuration=e2e
+```
+
+### 2. Dans un autre terminal, lancer les tests Cypress
+```bash
+npx cypress run --env coverage=true
+```
+
+### 3. Générer le rapport de couverture
+```bash
+npx nyc report --reporter=text-summary
+npx nyc report --reporter=html
+```
+
+📂 Le rapport est dans `coverage/`  
+📁 Les données brutes sont dans `.nyc_output/`
+
+---
+
+
+>  Cela permet de consulter le rapport en ligne via GitHub Pages par exemple
+
+---
+
+##  Structure du projet
+
+```
+src/
+├── app/
+│   ├── core/         # Services, guards, interceptors
+│   ├── auth/         # Connexion, inscription
+│   ├── sessions/     # Gestion des sessions
+│   └── shared/       # Composants partagés
+├── assets/
+├── environments/
+└── index.html
+```
+
+---
+
+##  Configurations importantes
+
+- `angular.json` → configuration `e2e` et `serve-coverage`
+- `coverage.webpack.js` → instrumentation de code avec Istanbul
+- `proxy.config.json` → redirection `/api` vers `http://localhost:8080`
+
+---
+
