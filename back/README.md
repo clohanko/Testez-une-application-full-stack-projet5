@@ -87,7 +87,7 @@ Le rapport se trouve ici :
 ├── security/           # JWT, filtre de sécurité
 ├── models/             # Entités JPA
 ├── payload/            # Requêtes & réponses JSON
-├── mapper/             # MapStruct DTO ↔️ Entity
+├── mapper/             # MapStruct DTO ↔ Entity
 ├── test/               # Tests unitaires & intégration
 └── resources/
     ├── application.properties
@@ -96,7 +96,7 @@ Le rapport se trouve ici :
 
 ---
 
-## 🔧 Configuration test
+## Configuration test
 
 Le profil `test` utilise une base H2 en mémoire avec création automatique des tables.
 
@@ -114,12 +114,6 @@ spring.sql.init.data-locations=classpath:data.sql
 
 ---
 
-## 🤝 Contribution
-
-Les contributions sont les bienvenues !  
-Cloner le dépôt, créer une branche, proposer une PR 👌
-
----
 
 ## 📄 Licence
 
