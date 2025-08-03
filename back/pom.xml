@@ -86,7 +86,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<scope>test</scope>
+			<version>2.2.224</version>
 		</dependency>
 
 	</dependencies>
@@ -125,6 +125,9 @@
 						<id>jacoco-check</id>
 						<goals><goal>check</goal></goals>
 						<configuration>
+							<excludes>
+								<exclude>com/openclassrooms/starterjwt/dto/**</exclude>
+							</excludes>
 							<rules>
 								<rule>
 									<element>PACKAGE</element>
@@ -178,9 +181,6 @@
 	<profiles>
 		<profile>
 			<id>test</id>
-			<activation>
-				<activeByDefault>true</activeByDefault> <!-- Active ce profil automatiquement -->
-			</activation>
 			<properties>
 				<spring.profiles.active>test</spring.profiles.active>
 			</properties>

@@ -13,7 +13,7 @@ Ce projet est une API REST construite avec **Spring Boot**. Elle gère l’authe
 - Maven 17
 - JUnit 5 & MockMvc
 - JaCoCo (couverture de tests)
--
+
 ---
 
 ## Installation

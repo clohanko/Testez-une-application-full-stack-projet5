@@ -5,6 +5,12 @@ describe('Sessions E2E', () => {
     cy.loginViaUI();
   });
 
+    it('Crée une nouvelle session (admin)', () => {
+    const sessionName = `Session Cypress - ${Date.now()}`;
+    cy.createSession(sessionName, 'Session créée par test');
+    cy.contains('Session created').should('exist');
+  });
+
   it('Affiche la liste des sessions', () => {
     cy.contains('Rentals available').should('be.visible');
     cy.get('.items .item').should('have.length.greaterThan', 0);
@@ -20,11 +26,7 @@ describe('Sessions E2E', () => {
     cy.get('mat-card-content').should('contain.text', 'Description:');
   });
 
-  it('Crée une nouvelle session (admin)', () => {
-    const sessionName = `Session Cypress - ${Date.now()}`;
-    cy.createSession(sessionName, 'Session créée par test');
-    cy.contains('Session created').should('exist');
-  });
+
 
   it('Met à jour une session existante (admin)', () => {
     const sessionName = `Session à modifier - ${Date.now()}`;
