@@ -1,8 +1,10 @@
+/// <reference types="jest" />
+
 import { TestBed } from '@angular/core/testing';
 import { SessionService } from './session.service';
 import { SessionInformation } from '../interfaces/sessionInformation.interface';
 
-describe('SessionService', () => {
+describe('SessionService – unitaires', () => {
   let service: SessionService;
 
   const mockUser: SessionInformation = {
@@ -20,32 +22,33 @@ describe('SessionService', () => {
     service = TestBed.inject(SessionService);
   });
 
+  afterEach(() => service.logOut());
+
   it('devrait être créé', () => {
-    expect(service).toBeDefined();
+    expect(service).toBeTruthy();
   });
 
-  it('devrait connecter l’utilisateur via logIn()', () => {
+  it('logIn() renseigne sessionInformation et isLogged', () => {
     service.logIn(mockUser);
     expect(service.sessionInformation).toEqual(mockUser);
     expect(service.isLogged).toBe(true);
   });
 
-  it('devrait déconnecter l’utilisateur via logOut()', () => {
-    service.logIn(mockUser); // Connecte d'abord
-    service.logOut();        // Puis déconnecte
+  it('logOut() vide sessionInformation et isLogged', () => {
+    service.logIn(mockUser);
+    service.logOut();
     expect(service.sessionInformation).toBeUndefined();
     expect(service.isLogged).toBe(false);
   });
 
-  it('devrait notifier les abonnés de isLogged$()', (done) => {
-    let stateChanges: boolean[] = [];
+  it('$isLogged() notifie les changements (false → true → false)', (done) => {
+    const expected = [false, true, false];
+    const received: boolean[] = [];
 
-    service.$isLogged().subscribe(value => {
-      stateChanges.push(value);
-
-      // Terminer quand on a reçu les 3 étapes
-      if (stateChanges.length === 3) {
-        expect(stateChanges).toEqual([false, true, false]);
+    service.$isLogged().subscribe(val => {
+      received.push(val);
+      if (received.length === expected.length) {
+        expect(received).toEqual(expected);
         done();
       }
     });
